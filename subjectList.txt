@@ -11,11 +11,9 @@ African American Studies (AFAM)
 African Studies
 African Studies (AFST)
 Akkadian (AKKD)
-Amendments
 American Sign Language (ASL)
 American Studies
 American Studies (AMST)
-A Message from the Dean of Yale College
 Ancient Greek (GREK)
 Anthropology
 Anthropology (ANTH)
@@ -33,7 +31,6 @@ Art
 Art (ART)
 Astronomy
 Astronomy (ASTR)
-B
 Biology
 Biology (BIOL)
 Biomedical Engineering
@@ -43,7 +40,6 @@ British Studies
 British Studies (BRST)
 Building Abbreviations
 Burmese (BURM)
-C
 Catalog A–Z Index
 Certificate Programs
 Chemical Engineering
@@ -61,7 +57,6 @@ Cognitive Science (CGSC)
 College Seminars
 Comparative Literature
 Comparative Literature (LITR)
-Completion of Course Work
 Computer Science
 Computer Science and Economics
 Computer Science and Economics (CSEC)
@@ -71,17 +66,12 @@ Computer Science (CPSC)
 Computing and Linguistics
 Computing and the Arts
 Computing and the Arts (CPAR)
-Course Credits and Course Loads
-Courses
-Credit from Other Universities
 Czech (CZEC)
-D
 DeVane Lecture Course
 Directed Studies
 Directed Studies (DRST)
 Distributional Requirements
 Dutch (DUTC)
-E
 Earth and Planetary Sciences
 Earth and Planetary Sciences (EPS)
 East Asian Languages and Literatures
@@ -117,7 +107,6 @@ Ethics, Politics, & Economics (EP&E)
 Ethnicity, Race, and Migration
 Ethnicity, Race, & Migration (ER&M)
 Experiential Learning
-F
 Film and Media Studies
 Film and Media Studies (FILM)
 Final Examination Schedules
@@ -127,16 +116,12 @@ Forestry and Environmental Studies
 Forestry and Environment Studies (F&ES)
 French
 French (FREN)
-G
-General Information
 German Studies
 German Studies (GMAN)
 Global Affairs
 Global Affairs (GLBL)
 Global Health Studies
 Global Health Studies (HLTH)
-Grades
-H
 Hebrew (HEBR)
 Hellenic Studies
 Hindi (HNDI)
@@ -152,34 +137,25 @@ Humanities (HUMS)
 Human Rights Studies
 Human Rights Studies (HMRT)
 Hungarian (HGRN)
-I
 Indonesian (INDN)
 International Experience
 Interruption or Temporary Suspension of University Services or Programs
 Islamic Studies Certificate
 Italian Studies
 Italian Studies (ITAL)
-J
 Japanese (JAPN)
 Judaic Studies
 Judaic Studies (JDST)
-K
 Key to Course Listings
 Khmer (KHMR)
 Kiswahili (SWAH)
 Korean (KREN)
-L
 Latin American Studies
 Latin American Studies (LAST)
 Latin (LATN)
 Leave of Absence, Withdrawal, and Reinstatement
 Linguistics
 Linguistics (LING)
-L. Special Academic Arrangements
-M
-Major Programs
-Majors in Yale College
-Map of Yale University
 Mathematics
 Mathematics and Philosophy
 Mathematics and Physics
@@ -199,7 +175,6 @@ Molecular, Cellular, and Developmental Biology (MCDB)
 Multidisciplinary Academic Programs
 Music
 Music (MUSI)
-N
 Naval Science
 Naval Science (NAVY)
 Near Eastern Languages and Civilizations
@@ -207,9 +182,7 @@ Near Eastern Languages and Civilizations (NELC)
 Neuroscience
 Neuroscience (NSCI)
 Nondegree Students Program
-O
 Ottoman (OTTM)
-P
 Persian (PERS)
 Philosophy
 Philosophy (PHIL)
@@ -228,22 +201,16 @@ Psychology
 Psychology (PSYC)
 Publication Data
 Punjabi (PNJB)
-R
 Reading Period and Final Examination Period
 Registration and Enrollment in Courses
 Religious Studies
 Religious Studies (RLST)
-Requirements for the B.A. or B.S. Degree
 Romanian (ROMN)
 Russian
 Russian, East European, and Eurasian Studies
 Russian, East European, and Eurasian Studies (RSEE)
 Russian (RUSS)
-S
 Sanskrit (SKRT)
-School of Global Affairs
-School of Public Health
-School of the Environment
 Science
 Science (SCIE)
 Sinhala (SNHL)
@@ -265,7 +232,6 @@ Study of the City
 Study of the City (STCY)
 Subject Abbreviations
 Subjects of Instruction
-T
 Table of Acceleration Credit
 Tamil (TAML)
 Theater and Performance Studies
@@ -278,24 +244,13 @@ Transfer Students
 Translation Studies Certificate
 Turkish (TKSH)
 Twi (TWI)
-U
 Ukrainian (UKRN)
 Urban Studies
 Urban Studies (URBN)
-V
 Veterans Affairs: Bill Payment and Pending Military Benefits
 Vietnamese (VIET)
-Visiting International Student Program
-W
-Withdrawal from Courses
 Wolof (WLOF)
 Women's, Gender, and Sexuality Studies
 Women's Gender and Sexuality Studies (WGSS)
-Y
-Yale College Administrative Officers
-Yale College Calendar with Pertinent Deadlines
-Yale Summer Session
-Yale University Policy Statements
 Yoruba (YORU)
-Z
 Zulu (ZULU)
