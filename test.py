@@ -1,8 +1,5 @@
 import requests
 import pandas as pd
-#get rid of the warning
-pd.options.mode.chained_assignment = None
-#get rid of the futre warning
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -39,4 +36,3 @@ db = pd.read_csv("courses.csv")
 db = db.drop_duplicates()
 #save to csv "courses.csv"
 db.to_csv("courses.csv", index=False)
-
