@@ -1,0 +1,20 @@
+#tables {
+    display: flex;
+    column-gap: 10px;
+    padding-top: 10px;
+}
+
+table {
+    border: 1px solid;
+    border-collapse: collapse;
+    /* align-items: baseline; */
+}
+
+tr {
+    border-bottom: 1px solid gray;
+    max-height: 10px;
+}
+
+tr:hover {
+    background-color: lightgray;
+}

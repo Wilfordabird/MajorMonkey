@@ -1,0 +1,23 @@
+{% if data: %}
+<table>
+    <tr>
+      <th>Add</th>
+      <th>Subject Code</th> 
+      <th>Course Number</th>
+      <th>Title</th>
+    </tr>
+        {% for row in data: %}
+            <tr>
+                <td>
+                    <a href={{'homepage?subj_add=%s&crn_add=%s&title_add=%s' % row}}>+</a>
+                </td>
+                <!-- TODO: only display row if its not in the added data -->
+                {% for field in row %}
+                    <td>
+                        {{'%s' % field}}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+</table>
+{% endif %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>MajorMonkey.com</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+   </head>
+   <body>
+
+      <hr>
+        Welcome to <strong>MajorMonkey.com</strong>
+        <br>
+        Find the major that's right for you!
+      <hr>
+
+      <h1>Courses Search</h1>
+      <form action="" method="get">
+         Subject:
+         <input type="text" name="subj", value={{subj}}>
+         Course Number:
+         <input type="text" name="crn", value={{crn}}>
+         Title:
+         <input type="text" name="title", value={{title}}>
+         <input type="submit" value="Search">
+      </form>
+
+      <div id = "tables">
+        {% include 'coursetable.html' %}
+        {% include 'addedtable.html' %}
+      </div>
+      
+      {% include 'footer.html' %}
+   </body>
+</html>
