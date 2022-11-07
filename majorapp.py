@@ -23,17 +23,23 @@ def homepage():
         subj = request.cookies.get('prev_subj')
         title = request.cookies.get('prev_title')
 
+    print("THE QUERY!")
+    print(subj, crn ,title)
+
     crn_add = request.args.get('crn_add')
     subj_add = request.args.get('subj_add')
-    title_add = request.args.get('title_add')
 
-    added_history = request.cookies.get('added_history')
+    crn_remove = request.args.get('crn_remove')
+    subj_remove = request.args.get('subj_remove')
+    course_remove = (subj_remove, crn_remove)
+
+    added_history = request.cookies.get('added_historys')
     if added_history is None:
         added_history = ""
 
     # Fetch added courses
     if crn_add is not None:
-        new_entry = f"({subj_add},{crn_add},{title_add})"
+        new_entry = f"({subj_add},{crn_add})"
         added_history += new_entry
 
     # Process added courses string into table
@@ -42,15 +48,26 @@ def homepage():
         for i in added_history.split(")"):
             try:
                 i = i.split("(")
-                added_data.append(tuple(i[1].split(",")))
+                course = tuple(i[1].split(","))
+                # Process remove request
+                if course == course_remove:
+                    continue
+                added_data.append(course)
             except IndexError:
                 pass
 
+
     searchdata = CourseSearch(QueryArgs(subj, crn, title)).data
     data = []
-    for entry in searchdata:
-        if entry not in added_data:
-            data.append(entry)
+
+    print(subj, crn ,title)
+
+    print(added_data)
+    print(searchdata)
+    for _subj, _crn, _title in searchdata:
+        if (_subj, _crn) in added_data:
+            continue
+        data.append((_subj, _crn, _title))
 
 
     html = render_template('homepage.html',
@@ -64,6 +81,11 @@ def homepage():
         response.set_cookie('prev_subj', subj)
         response.set_cookie('prev_title', title)
 
-    response.set_cookie('added_history', added_history)
+    # Stringify history
+    stringed_history = ""
+    for _subj, _crn in added_data:
+        stringed_history +=  f"({_subj},{_crn})"
+
+    response.set_cookie('added_historys', stringed_history)
 
     return response

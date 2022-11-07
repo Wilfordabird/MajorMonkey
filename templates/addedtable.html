@@ -1,15 +1,13 @@
-{% if added_data: %}
-<table>
+<table class="table table-primary table-striped table-hover">
     <tr>
       <th>Remove</th>
       <th>Subject Code</th> 
       <th>Course Number</th>
-      <th>Title</th>
     </tr>
         {% for row in added_data: %}
             <tr>
                 <td>
-                    <a href={{'homepage?subj_remove=%s&crn_remove=%s&title_remove=%s' % row}}>-</a>
+                    <a href={{'homepage?subj_remove=%s&crn_remove=%s' % row}}>-</a>
                 </td>
                 {% for field in row %}
                     <td>
@@ -19,4 +17,3 @@
             </tr>
         {% endfor %}
 </table>
-{% endif %}
