@@ -7,7 +7,7 @@
         {% for row in added_data: %}
             <tr>
                 <td>
-                    <a href={{'homepage?subj_remove=%s&crn_remove=%s' % row}}>-</a>
+                    <a href={{'homepage?subj_remove=%s&crn_remove=%s' % (row[0], row[1])}}>-</a>
                 </td>
                 {% for field in row %}
                     <td>
