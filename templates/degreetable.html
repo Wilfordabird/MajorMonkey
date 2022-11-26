@@ -1,0 +1,22 @@
+{% if data: %}
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Degree Name</th>
+                <th>Courses Completed</th>
+                <th>Courses Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No data found.</p>
+{% endif %}

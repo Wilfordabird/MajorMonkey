@@ -127,6 +127,8 @@ def major():
 
         # Determine how many requisites are satisfied given user's history
 
+        # TODO: Develop algorithm to determine best degree
+
         # This could potentially remove the unique required courses? Needs to be tested
         # Eg. Comp Sci. BA requires CPSC 201. CPSC 201 in user_history so removes it from req_courses
         req_courses = [course for course in req_courses if course not in user_history]
@@ -136,6 +138,13 @@ def major():
 
         # Keep log of the degree with the least missing courses
         # Return the top 3 degrees
+
+    # Dummy example
+    best = [
+        ["Computer Science BA", "7", "3"],
+        ["Economics BA", "6", "6"],
+        ["Mathematics BA", "3", "7"]
+    ]
 
     html = render_template('major.html',
             data=best,
