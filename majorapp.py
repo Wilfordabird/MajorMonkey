@@ -84,9 +84,9 @@ def homepage():
     # Generate the html
     html = render_template('homepage.html',
             data=data,
-            crn=crn,
-            subj=subj,
-            title=title,
+            crn=crn if crn else "",
+            subj=subj if subj else "",
+            title=title if title else "",
             added_data=user_history)
 
     response = make_response(html)
@@ -113,8 +113,6 @@ def major():
 
     best = []
 
-
-    
     # Loop through all possible degrees
     for degree in client.data:
         print("CLIENT DATA - DEGREES TABLE")
