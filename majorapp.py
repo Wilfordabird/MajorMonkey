@@ -1,5 +1,5 @@
 """Manages html pages"""
-
+import ast
 import urllib.parse as url
 from html import escape
 from datetime import datetime
@@ -106,13 +106,21 @@ def major():
 
     user_history = get_user_courses(username)
 
+    print(user_history)
+
     client = DegreeSearch()
     client.search()
 
     best = []
 
+
+    
     # Loop through all possible degrees
     for degree in client.data:
+        print("CLIENT DATA - DEGREES TABLE")
+        print(degree)
+        print("----------------------------------")
+        
         name = degree[DEGREE_NAME]
         requirements = degree[REQUIREMENTS]
         electives = degree[ELECTIVES]
@@ -122,29 +130,111 @@ def major():
         ele_client = RequisiteSearch(electives)
         ele_client.search()
 
-        req_courses = req_client.data
-        ele_courses = ele_client.data
+        req_courses = req_client.data[0]
+        ele_courses = ele_client.data[0]
+        print("REQ COURSES")
 
-        # Determine how many requisites are satisfied given user's history
+        #cut out the first character and last char of the string
+        req_courses = req_courses[1][1:-1].replace("\"", "").replace("[", "").split("],")
+        #remove ] from the last element
+        req_courses[-1] = req_courses[-1][:-1]
+        #strip each course of whitespace
+        req_courses = [y.strip() for y in req_courses]
+        print(req_courses)
+        print("----------------------------------")
+        print("ELE COURSES")
+        #cut out the first character and last char of the string
+        ele_courses = ele_courses[1][1:-1].replace("\"", "").replace("[", "").split("],")
+        #remove ] from the last element
+        ele_courses[-1] = ele_courses[-1][:-1]
+        # strip every element of the list
+        ele_courses = [x.strip() for x in ele_courses]
+        print(ele_courses)
+        print("----------------------------------")
 
         # TODO: Develop algorithm to determine best degree
+        count = 0
+        left_to_take = len(req_courses) + len(ele_courses)
+        takencourses = []
+        for i in user_history:
+            takencourses.append(i[0] + ' ' + i[1])
+        courses = req_courses + ele_courses
+        for course in courses:
+            if ',' not in course:
+                if course in takencourses:
+                    count += 1
+                    left_to_take -= 1
+            if ',' in course:
+                course = course.split(',')
+                if len(course) == 2:
+                    if course[0] in takencourses or course[1] in takencourses:
+                        count += 1
+                        left_to_take -= 1
+                elif len(course) == 3:
+                    print(len(course))
+                    if 'num' in course[1]:
+                        #add course[3] to the to take
+                        print(course[2].strip())
+            #             left_to_take += int(course[2])
+            #             #CHECK CONDITIONAL
+                        
+            #             if "==" and "skill" in course[2]:
+            #                 print("CHECK IF COURSE HAS SAID SKILL")
+                        
+            #             if "<" in course [1]:
+            #                 cond = course[1].split("<")
+            #                 if "num" in cond[0]:
+            #                     #CHECK IF a course in user history that isn't in anything else has a number less than the number in the condition
+            #                     for i in takencourses:
+            #                         if i not in courses:
+            #                             if i.split(' ')[1] < cond[1]:
+            #                                 count += 1
+            #                                 left_to_take -= 1
+            #                 else:
+            #                     #CHECK IF a course in user history that isn't in anything else has a number higher than the skill in the condition
+            #                     for i in takencourses:
+            #                         if i not in courses:
+            #                             if i.split(' ')[1] > cond[1]:
+            #                                 count += 1
+            #                                 left_to_take -= 1
+            #             if ">" in course [1]:
+            #                 cond = course[1].split(">")
+            #                 if "num" in cond[0]:
+            #                     #CHECK IF a course in user history that isn't in anything else has a number higher than the number in the condition
+            #                     for i in takencourses:
+            #                         if i not in courses:
+            #                             if i.split(' ')[1] > cond[1]:
+            #                                 count += 1
+            #                                 left_to_take -= 1
+            #                 else:
+            #                     #CHECK IF a course in user history that isn't in anything else has a number less than the skill in the condition
+            #                     for i in takencourses:
+            #                         if i not in courses:
+            #                             if i.split(' ')[1] < cond[1]:
+            #                                 count += 1
+            #                                 left_to_take -= 1
+                    elif course[0] in takencourses or course[1] in takencourses or course[2] in takencourses:
+                        count += 1
+                        left_to_take -= 1
 
-        # This could potentially remove the unique required courses? Needs to be tested
-        # Eg. Comp Sci. BA requires CPSC 201. CPSC 201 in user_history so removes it from req_courses
-        req_courses = [course for course in req_courses if course not in user_history]
-        ele_courses = [course for course in ele_courses if course not in user_history]
-        
+        if count > 0:
+            best.append((name, count, left_to_take))
+
+        # check if count is higher than the third one
+        if len(best) > 3:
+            best.sort(key=lambda x: x[1], reverse=True)
+            best.pop()
         # Deal with complex requiesites (eg. 4 courses > 400 level)
 
         # Keep log of the degree with the least missing courses
         # Return the top 3 degrees
 
-    # Dummy example
-    best = [
-        ["Computer Science BA", "7", "3"],
-        ["Economics BA", "6", "6"],
-        ["Mathematics BA", "3", "7"]
-    ]
+    # # Dummy example
+    # best = [
+    #     ["Computer Science BA", "7", "3"],
+    #     ["Economics BA", "6", "6"],
+    #     ["Mathematics BA", "3", "7"]
+    # ]
 
     html = render_template('major.html',
             data=best,

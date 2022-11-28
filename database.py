@@ -240,6 +240,8 @@ class DegreeInsert(Database):
     """Inserts degree data into database"""
 
     def __init__(self, degreename, requirements, electives):
+        print("Inserting degree")
+        print(degreename, requirements, electives)
         super().__init__()
         self._prepared_statements.extend([degreename, requirements, electives])
 
@@ -256,6 +258,7 @@ class RequisiteSearch(Database):
 
     def __init__(self, requisitename):
         super().__init__()
+        # print("Requisite name:", requisitename)
         self._prepared_statements.append(requisitename)
 
     def search(self):
@@ -271,6 +274,8 @@ class RequisiteInsert(Database):
 
     def __init__(self, requisitename, requisites):
         super().__init__()
+        # print("Inserting requisite")
+        print(requisitename, json.dumps(requisites))
         self._prepared_statements.extend([requisitename, json.dumps(requisites)])
 
     def insert(self):
@@ -279,4 +284,6 @@ class RequisiteInsert(Database):
 
     def generate_query(self):
         """Generates the query string"""
+        print("About to insert requisite into database")
+        # self._query_string = "DELETE FROM requisites WHERE TRUE;"
         self._query_string = "INSERT INTO requisites VALUES (?, ?);"
