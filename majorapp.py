@@ -220,11 +220,22 @@ def inmajor(reqs, course):
                                 newreq = (dept_name, cond, mult)
                                 res.append(newreq)
                             return res
-                    elif skill == "SO":
+                    elif skill == "SC":
                         coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
                         coursese.search()
                         print(coursese.data[0][3])
-                        if "YCSO" in coursese.data[0][3]:
+                        if "YCSC" in coursese.data[0][3]:
+                            mult -= 1
+                            res.remove(req)
+                            if mult > 0:
+                                newreq = (dept_name, cond, mult)
+                                res.append(newreq)
+                            return res
+                    elif skill == "QR":
+                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                        coursese.search()
+                        print(coursese.data[0][3])
+                        if "YCQR" in coursese.data[0][3]:
                             mult -= 1
                             res.remove(req)
                             if mult > 0:
