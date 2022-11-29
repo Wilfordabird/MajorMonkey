@@ -77,7 +77,7 @@ def homepage():
 
     # Ignores courses that are already in user's history
     data = []
-    for _subj, _crn, _title in client.data:
+    for _subj, _crn, _title, _ in client.data:
         if [_subj, _crn] not in user_history:
             data.append((_subj, _crn, _title))
 
