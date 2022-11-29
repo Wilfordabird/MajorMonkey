@@ -98,141 +98,211 @@ def homepage():
 
     return response
 
+def courses_2_go(reqs, elec):
+    courses = 0
+    for req in reqs:
+        if len(req) == 1:
+            courses += 1
+        else:
+            if type(req[1]) != list:
+                num = req[2]
+                courses += int(num)
+            else:
+                courses += 1
+
+    for req in elec:
+        if len(req) == 1:
+            courses += 1
+        else:
+            if type(req[1]) != list:
+                num = int(req[2])
+                courses += num
+            else:
+                courses += 1
+
+    return courses
+
+
+def inmajor(reqs, course):
+    if reqs == None:
+        return []
+    res = reqs
+    for req in reqs:
+        # handle if there is just a single course
+        if len(req) == 1:
+            check = req[0].split()
+            if course == check:
+                res.remove(req)
+                return res
+        else:
+            if type(req[1]) != list:
+                
+                dept_name = req[0]
+                cond = req[1]
+                mult = int(req[2])
+                # # req is an elective with a condition
+                # print("Condition")
+                if "<" in cond:
+                    # if there are 2 < in the condition
+                    if cond.count("<") == 1:
+                        course_num = course[1]
+                        course_dept = course[0]
+                        nnum = cond.split("<")[1].strip()
+                        try:
+                            num = int(nnum)
+                        except:
+                            print(nnum)
+                            print(cond)
+
+                        if course_dept == dept_name and course_num < num:
+                            mult -= 1
+                            res.remove(req)
+                            if mult > 0:
+                                newreq = (dept_name, cond, mult)
+                                res.append(newreq)
+                            return res
+                    else:
+                        course_num = course[1]
+                        course_dept = course[0]
+                        lownum = cond.split("<")[0].strip()
+                        highnum = cond.split("<")[2].strip()
+                        try:
+                            low = int(lownum)
+                            high = int(highnum)
+                        except:
+                            print(lownum)
+                            print(highnum)
+                            print(cond)
+                        
+                        if course_dept == dept_name and course_num < high and course_num > low:
+                            mult -= 1
+                            res.remove(req)
+                            if mult > 0:
+                                newreq = (dept_name, cond, mult)
+                                res.append(newreq)
+                            return res
+                elif ">" in cond:
+                    course_num = int(course[1])
+                    course_dept = course[0]
+                    nnum = cond.split(">")[1].strip()
+                    try:
+                        num = int(nnum)
+                    except:
+                        print(cond)
+                        print(nnum)
+                    if course_dept == dept_name and course_num > int(num):
+                        mult -= 1
+                        res.remove(req)
+                        if mult > 0:
+                            newreq = (dept_name, cond, mult)
+                            res.append(newreq)
+                        return res
+                elif "DUS" in cond:
+                    mult -= 1
+                    res.remove(req)
+                    if mult > 0:
+                        newreq = (dept_name, cond, mult)
+                        res.append(newreq)
+                    return res
+                elif "==" in cond:
+                    # CHECK the equals of a skill
+                    course_num = course[1]
+                    course_dept = course[0]
+                    skill = cond.split("==")[1].strip()
+                    print(skill)
+                    if skill == "HU":
+                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                        coursese.search()
+                        if "YCHU" in coursese.data[0][3]:
+                            mult -= 1
+                            res.remove(req)
+                            if mult > 0:
+                                newreq = (dept_name, cond, mult)
+                                res.append(newreq)
+                            return res
+                    elif skill == "SO":
+                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                        coursese.search()
+                        print(coursese.data[0][3])
+                        if "YCSO" in coursese.data[0][3]:
+                            mult -= 1
+                            res.remove(req)
+                            if mult > 0:
+                                newreq = (dept_name, cond, mult)
+                                res.append(newreq)
+                            return res
+                    else:
+                        print("ERROR: Skill not found")
+                    return res
+            else:
+                # it is an or statement and each needs to be checked
+                for r in req:
+                    if len(r) == 1:
+                        r = r[0].split()
+                        if course == r:
+                            res = reqs.remove(req)
+                            return res
+    return res
+        
+            
+
 @app.route('/major', methods=['GET'])
 def major():
     """Determines the user's major and generates html"""
 
     username = authenticate()
-
     user_history = get_user_courses(username)
-
+    print("User history")
     print(user_history)
+    print("------------------")
 
     client = DegreeSearch()
     client.search()
 
+
+    
     best = []
 
     # Loop through all possible degrees
     for degree in client.data:
-        print("CLIENT DATA - DEGREES TABLE")
-        print(degree)
-        print("----------------------------------")
+        
         
         name = degree[DEGREE_NAME]
         requirements = degree[REQUIREMENTS]
         electives = degree[ELECTIVES]
+
+        print(name)
+        print("----------------------------------")
 
         req_client = RequisiteSearch(requirements)
         req_client.search()
         ele_client = RequisiteSearch(electives)
         ele_client.search()
 
-        req_courses = req_client.data[0]
-        ele_courses = ele_client.data[0]
-        print("REQ COURSES")
+        req_courses = req_client.data
+        ele_courses = ele_client.data
 
-        #cut out the first character and last char of the string
-        req_courses = req_courses[1][1:-1].replace("\"", "").replace("[", "").split("],")
-        #remove ] from the last element
-        req_courses[-1] = req_courses[-1][:-1]
-        #strip each course of whitespace
-        req_courses = [y.strip() for y in req_courses]
-        print(req_courses)
-        print("----------------------------------")
-        print("ELE COURSES")
-        #cut out the first character and last char of the string
-        ele_courses = ele_courses[1][1:-1].replace("\"", "").replace("[", "").split("],")
-        #remove ] from the last element
-        ele_courses[-1] = ele_courses[-1][:-1]
-        # strip every element of the list
-        ele_courses = [x.strip() for x in ele_courses]
-        print(ele_courses)
-        print("----------------------------------")
-
-        # TODO: Develop algorithm to determine best degree
         count = 0
-        left_to_take = len(req_courses) + len(ele_courses)
-        takencourses = []
-        for i in user_history:
-            takencourses.append(i[0] + ' ' + i[1])
-        courses = req_courses + ele_courses
-        for course in courses:
-            if ',' not in course:
-                if course in takencourses:
-                    count += 1
-                    left_to_take -= 1
-            if ',' in course:
-                course = course.split(',')
-                if len(course) == 2:
-                    if course[0] in takencourses or course[1] in takencourses:
-                        count += 1
-                        left_to_take -= 1
-                elif len(course) == 3:
-                    print(len(course))
-                    if 'num' in course[1]:
-                        #add course[3] to the to take
-                        print(course[2].strip())
-            #             left_to_take += int(course[2])
-            #             #CHECK CONDITIONAL
-                        
-            #             if "==" and "skill" in course[2]:
-            #                 print("CHECK IF COURSE HAS SAID SKILL")
-                        
-            #             if "<" in course [1]:
-            #                 cond = course[1].split("<")
-            #                 if "num" in cond[0]:
-            #                     #CHECK IF a course in user history that isn't in anything else has a number less than the number in the condition
-            #                     for i in takencourses:
-            #                         if i not in courses:
-            #                             if i.split(' ')[1] < cond[1]:
-            #                                 count += 1
-            #                                 left_to_take -= 1
-            #                 else:
-            #                     #CHECK IF a course in user history that isn't in anything else has a number higher than the skill in the condition
-            #                     for i in takencourses:
-            #                         if i not in courses:
-            #                             if i.split(' ')[1] > cond[1]:
-            #                                 count += 1
-            #                                 left_to_take -= 1
-            #             if ">" in course [1]:
-            #                 cond = course[1].split(">")
-            #                 if "num" in cond[0]:
-            #                     #CHECK IF a course in user history that isn't in anything else has a number higher than the number in the condition
-            #                     for i in takencourses:
-            #                         if i not in courses:
-            #                             if i.split(' ')[1] > cond[1]:
-            #                                 count += 1
-            #                                 left_to_take -= 1
-            #                 else:
-            #                     #CHECK IF a course in user history that isn't in anything else has a number less than the skill in the condition
-            #                     for i in takencourses:
-            #                         if i not in courses:
-            #                             if i.split(' ')[1] < cond[1]:
-            #                                 count += 1
-            #                                 left_to_take -= 1
-                    elif course[0] in takencourses or course[1] in takencourses or course[2] in takencourses:
-                        count += 1
-                        left_to_take -= 1
+        amount_to_take = courses_2_go(req_courses, ele_courses)
 
-        if count > 0:
-            best.append((name, count, left_to_take))
+        req_to_go = req_courses
+        elc_to_go = ele_courses
 
-        # check if count is higher than the third one
-        if len(best) > 3:
-            best.sort(key=lambda x: x[1], reverse=True)
-            best.pop()
-        # Deal with complex requiesites (eg. 4 courses > 400 level)
+        # run search with 
+        for course in user_history:
+            req_to_go = inmajor(req_to_go, course)
+            elc_to_go = inmajor(elc_to_go, course)
+        
+        amount_still_to_take = courses_2_go(req_to_go, elc_to_go)
 
-        # Keep log of the degree with the least missing courses
-        # Return the top 3 degrees
-
-    # # Dummy example
-    # best = [
-    #     ["Computer Science BA", "7", "3"],
-    #     ["Economics BA", "6", "6"],
-    #     ["Mathematics BA", "3", "7"]
-    # ]
+        # see if it is in the three lowest to take
+        if len(best) < 3:
+            best.append((name, amount_to_take - amount_still_to_take, amount_still_to_take))
+        else:
+            for i in range(len(best)):
+                if amount_still_to_take < best[i][2]:
+                    best[i] = (name, amount_to_take - amount_still_to_take, amount_still_to_take)
+                    break
 
     html = render_template('major.html',
             data=best,

@@ -96,7 +96,7 @@ class CourseSearch(Database):
     def generate_query(self):
         """Generates the SQL query string based on user query args"""
 
-        self._query_string = "SELECT subjectcode, coursenum, coursetitle FROM courses "
+        self._query_string = "SELECT subjectcode, coursenum, coursetitle, distdeg FROM courses "
 
         # Selection based on filters
         filters = vars(self.args)
@@ -135,6 +135,7 @@ class UserSearch(Database):
     def data(self):
         """Returns the data from the query"""
         if self._data:
+            
             return json.loads(self._data[0][0])
         return self._data
 
@@ -261,13 +262,21 @@ class RequisiteSearch(Database):
         # print("Requisite name:", requisitename)
         self._prepared_statements.append(requisitename)
 
+    @property
+    def data(self):
+        """Returns the data from the query"""
+        if self._data:
+            return json.loads(self._data[0][0])
+        return self._data
+
+
     def search(self):
         """Manages the execution of the SQL query"""
         self.run_query()
 
     def generate_query(self):
         """Generates the SQL query to search for requisites"""
-        self._query_string = "SELECT * FROM requisites WHERE requisitename = ?;"
+        self._query_string = "SELECT (requisite) FROM requisites WHERE requisitename = ?;"
 
 class RequisiteInsert(Database):
     """Inserts requisite data into database"""

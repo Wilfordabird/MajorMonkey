@@ -2,6 +2,8 @@
 
 from database import DegreeInsert, RequisiteInsert
 import pandas as pd
+from sqlite3 import connect
+import sqlite3
 import re
 
 def main():
@@ -30,16 +32,28 @@ def main():
         #get rid of the last entry if it is empty
         if clean_requisite[-1] == '' or clean_requisite[-1] == ' ':
             clean_requisite = clean_requisite[:-1]
+
         #check for ors
         for i in range(len(clean_requisite)):
             clean_requisite[i] = clean_requisite[i].strip()
             #split it at an or
+            dept_name = clean_requisite[i].split(' ')[0]
             clean_requisite[i] = re.split(' or ', clean_requisite[i])
-            dept_name = clean_requisite[i][0].split(' ')[0]
-            #split it at a space, and if it is only 1, then make the dept the same as the first part of the or
-            for j in range(len(clean_requisite[i])):
-                if len(clean_requisite[i][j].split()) == 1:
-                    clean_requisite[i][j] = dept_name + ' ' + clean_requisite[i][j]
+            
+            if len(clean_requisite[i]) > 1:
+                #  print(clean_requisite[i])
+                #split it at a space, and if it is only 1, then make the dept the same as the first part of the or
+                for j in range(len(clean_requisite[i])):
+                    if len(clean_requisite[i][j].split()) == 1:
+                        clean_requisite[i][j] = dept_name + ' ' + clean_requisite[i][j]
+                        print(clean_requisite[i][j])
+                
+                print(clean_requisite[i])
+                for j in range(len(clean_requisite[i])):
+                    clean_requisite[i][j] = clean_requisite[i][j].split()
+                    print(clean_requisite[i][j])
+
+            
     
         #check for * and conditions
         for i in range(len(clean_requisite)):
@@ -54,7 +68,9 @@ def main():
                     except IndexError:
                         condition = "DUS"
                     dept = clean_requisite[i][j].split('num')[0].strip()
+                    print(condition)
                     clean_requisite[i] = [dept, condition, mulitple]
+                
     
         print(requisitename, clean_requisite)
         requisite_client = RequisiteInsert(requisitename, clean_requisite)
@@ -69,4 +85,11 @@ def main():
         degree_client.insert()
 
 if __name__ == "__main__":
+    # run sql command to delete all entries in degrees and requiresites tables
+    conn = sqlite3.connect('MajorMonkey.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM Degrees;")
+    c.execute("DELETE FROM Requisites;")
+    conn.commit()
+    conn.close()
     main()

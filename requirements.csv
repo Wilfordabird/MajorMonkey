@@ -4,7 +4,7 @@ CPSC BA Elec,CPSC num (where num > 300) * 4;
 CPSC BS Elec,CPSC num (where num > 300) * 6;
 ECON Req,ECON 115 or ECON 108;  ECON 116 or ECON 111; MATH 112 or MATH 115 or MATH 120; ECON 121 or ECON 125; ECON 122 or ECON 126; ECON 117; 
 ECON Elec,ECON num (where num > 0) * 4; ECON num (where 400 < num < 492) * 2; 
-AFAM Req,"AFAM 160, AFAM 162, AFAM 410, AFAM 480, AFAM 491; AFAM num (where num[skill] == HU); AFAM num (where num[skill] == SS);"
+AFAM Req,"AFAM 160, AFAM 162, AFAM 410, AFAM 480, AFAM 491; AFAM num (where num[skill] == HU) * 1; AFAM num (where num[skill] == SO) * 1;"
 AFAM Elec,DUS num * 5;
 PORT Req,PORT 130; PORT 491 or PORT 492; 
 PORT Elec,PORT num (where num > 130) * 5; DUS num * 4;
