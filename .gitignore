@@ -1,0 +1,3 @@
+# ignore everything in the venv folder and the pycache folder
+venv/
+__pycache__/
