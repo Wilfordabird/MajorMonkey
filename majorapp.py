@@ -100,25 +100,28 @@ def homepage():
 
 def courses_2_go(reqs, elec):
     courses = 0
-    for req in reqs:
-        if len(req) == 1:
-            courses += 1
-        else:
-            if type(req[1]) != list:
-                num = req[2]
-                courses += int(num)
-            else:
-                courses += 1
 
-    for req in elec:
-        if len(req) == 1:
-            courses += 1
-        else:
-            if type(req[1]) != list:
-                num = int(req[2])
-                courses += num
-            else:
+    if reqs:
+        for req in reqs:
+            if len(req) == 1:
                 courses += 1
+            else:
+                if type(req[1]) != list:
+                    num = req[2]
+                    courses += int(num)
+                else:
+                    courses += 1
+    
+    if elec:
+        for req in elec:
+            if len(req) == 1:
+                courses += 1
+            else:
+                if type(req[1]) != list:
+                    num = int(req[2])
+                    courses += num
+                else:
+                    courses += 1
 
     return courses
 
@@ -284,7 +287,6 @@ def major():
     # Loop through all possible degrees
     for degree in client.data:
         
-        
         name = degree[DEGREE_NAME]
         requirements = degree[REQUIREMENTS]
         electives = degree[ELECTIVES]
@@ -308,8 +310,10 @@ def major():
 
         # run search with 
         for course in user_history:
+            old_req = req_to_go
             req_to_go = inmajor(req_to_go, course)
-            elc_to_go = inmajor(elc_to_go, course)
+            # if old_req == req_to_go:
+            #     elc_to_go = inmajor(elc_to_go, course)
         
 
         print(req_to_go)
