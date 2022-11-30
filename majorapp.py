@@ -124,6 +124,7 @@ def courses_2_go(reqs, elec):
 
 
 def inmajor(reqs, course):
+    
     if reqs == None:
         return []
     res = reqs
@@ -145,14 +146,17 @@ def inmajor(reqs, course):
                 if "<" in cond:
                     # if there are 2 < in the condition
                     if cond.count("<") == 1:
-                        course_num = course[1]
+                        course_numb = course[1]
                         course_dept = course[0]
                         nnum = cond.split("<")[1].strip()
                         try:
                             num = int(nnum)
+                            course_num = int(course_numb)
                         except:
                             print(nnum)
-                            print(cond)
+                            print(course_numb)
+                            print("Error typecasting")
+                            continue
 
                         if course_dept == dept_name and course_num < num:
                             mult -= 1
@@ -162,11 +166,12 @@ def inmajor(reqs, course):
                                 res.append(newreq)
                             return res
                     else:
-                        course_num = course[1]
+                        course_numb = course[1]
                         course_dept = course[0]
                         lownum = cond.split("<")[0].strip()
                         highnum = cond.split("<")[2].strip()
                         try:
+                            course_num = int(course_numb)
                             low = int(lownum)
                             high = int(highnum)
                         except:
@@ -198,61 +203,58 @@ def inmajor(reqs, course):
                             res.append(newreq)
                         return res
                 elif "DUS" in cond:
-                    mult -= 1
-                    res.remove(req)
-                    if mult > 0:
-                        newreq = (dept_name, cond, mult)
-                        res.append(newreq)
                     return res
                 elif "==" in cond:
                     # CHECK the equals of a skill
+                    
                     course_num = course[1]
                     course_dept = course[0]
-                    skill = cond.split("==")[1].strip()
-                    print(skill)
-                    if skill == "HU":
-                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
-                        coursese.search()
-                        if "YCHU" in coursese.data[0][3]:
-                            mult -= 1
-                            res.remove(req)
-                            if mult > 0:
-                                newreq = (dept_name, cond, mult)
-                                res.append(newreq)
-                            return res
-                    elif skill == "SC":
-                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
-                        coursese.search()
-                        print(coursese.data[0][3])
-                        if "YCSC" in coursese.data[0][3]:
-                            mult -= 1
-                            res.remove(req)
-                            if mult > 0:
-                                newreq = (dept_name, cond, mult)
-                                res.append(newreq)
-                            return res
-                    elif skill == "QR":
-                        coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
-                        coursese.search()
-                        print(coursese.data[0][3])
-                        if "YCQR" in coursese.data[0][3]:
-                            mult -= 1
-                            res.remove(req)
-                            if mult > 0:
-                                newreq = (dept_name, cond, mult)
-                                res.append(newreq)
-                            return res
+                    if course_dept == dept_name:
+                        skill = cond.split("==")[1].strip()
+                        print(skill)
+                        if skill == "HU":
+                            coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                            coursese.search()
+                            if "YCHU" in coursese.data[0][3]:
+                                mult -= 1
+                                res.remove(req)
+                                if mult > 0:
+                                    newreq = (dept_name, cond, mult)
+                                    res.append(newreq)
+                                return res
+                        elif skill == "SC":
+                            coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                            coursese.search()
+                            print(coursese.data[0][3])
+                            if "YCSC" in coursese.data[0][3]:
+                                mult -= 1
+                                res.remove(req)
+                                if mult > 0:
+                                    newreq = (dept_name, cond, mult)
+                                    res.append(newreq)
+                                return res
+                        elif skill == "QR":
+                            coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
+                            coursese.search()
+                            print(coursese.data[0][3])
+                            if "YCQR" in coursese.data[0][3]:
+                                mult -= 1
+                                res.remove(req)
+                                if mult > 0:
+                                    newreq = (dept_name, cond, mult)
+                                    res.append(newreq)
+                                return res
+                        else:
+                            print("ERROR: Skill not found")
+                        return res
                     else:
-                        print("ERROR: Skill not found")
-                    return res
+                        return res
             else:
                 # it is an or statement and each needs to be checked
                 for r in req:
-                    if len(r) == 1:
-                        r = r[0].split()
-                        if course == r:
-                            res = reqs.remove(req)
-                            return res
+                    if course == r:
+                        res = reqs.remove(req)
+                        return res
     return res
         
             
@@ -304,6 +306,9 @@ def major():
             req_to_go = inmajor(req_to_go, course)
             elc_to_go = inmajor(elc_to_go, course)
         
+
+        print(req_to_go)
+        print(elc_to_go)
         amount_still_to_take = courses_2_go(req_to_go, elc_to_go)
 
         # see if it is in the three lowest to take
