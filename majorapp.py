@@ -251,10 +251,15 @@ def inmajor(reqs, course):
                         return res
             else:
                 # it is an or statement and each needs to be checked
-                for r in req:
-                    if course == r:
-                        res = reqs.remove(req)
+                if len(req) == 1:
+                    if course == check:
+                        res.remove(req)
                         return res
+                else:
+                    for r in req:
+                        if course == r:
+                            res = reqs.remove(req)
+                            return res
     return res
         
             
