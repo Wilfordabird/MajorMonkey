@@ -127,7 +127,7 @@ def courses_2_go(reqs, elec):
 
 
 def inmajor(reqs, course):
-    
+    print(reqs, course)
     if reqs == None:
         return []
     res = reqs
@@ -209,7 +209,6 @@ def inmajor(reqs, course):
                     return res
                 elif "==" in cond:
                     # CHECK the equals of a skill
-                    
                     course_num = course[1]
                     course_dept = course[0]
                     if course_dept == dept_name:
@@ -261,8 +260,10 @@ def inmajor(reqs, course):
                 else:
                     for r in req:
                         if course == r:
-                            res = reqs.remove(req)
-                            return res
+                            reqs.remove(req)
+                            res = reqs
+                            break
+                    return res
     return res
         
             
@@ -310,10 +311,11 @@ def major():
 
         # run search with 
         for course in user_history:
-            old_req = req_to_go
+            precount = courses_2_go(req_to_go, elc_to_go)
             req_to_go = inmajor(req_to_go, course)
-            # if old_req == req_to_go:
-            #     elc_to_go = inmajor(elc_to_go, course)
+            postcount = courses_2_go(req_to_go, elc_to_go)
+            if precount == postcount:
+                elc_to_go = inmajor(elc_to_go, course)
         
 
         print(req_to_go)
@@ -329,6 +331,8 @@ def major():
                     best[i] = (name, amount_to_take - amount_still_to_take, amount_still_to_take)
                     break
 
+    # sort the best
+    best.sort(key=lambda tup: tup[2])
     html = render_template('major.html',
             data=best,
             user_history=user_history)
