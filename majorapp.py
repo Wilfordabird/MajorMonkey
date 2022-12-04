@@ -127,12 +127,14 @@ def courses_2_go(reqs, elec):
 
 
 def inmajor(reqs, course):
-    print(reqs, course)
+    
     if reqs == None:
         return []
     res = reqs
+    
     for req in reqs:
         # handle if there is just a single course
+        
         if len(req) == 1:
             check = req[0].split()
             if course == check:
@@ -213,7 +215,7 @@ def inmajor(reqs, course):
                     course_dept = course[0]
                     if course_dept == dept_name:
                         skill = cond.split("==")[1].strip()
-                        print(skill)
+                       
                         if skill == "HU":
                             coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
                             coursese.search()
@@ -227,7 +229,7 @@ def inmajor(reqs, course):
                         elif skill == "SC":
                             coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
                             coursese.search()
-                            print(coursese.data[0][3])
+                            
                             if "YCSC" in coursese.data[0][3]:
                                 mult -= 1
                                 res.remove(req)
@@ -238,7 +240,7 @@ def inmajor(reqs, course):
                         elif skill == "QR":
                             coursese = CourseSearch(QueryArgs(course_dept, course_num, ""))
                             coursese.search()
-                            print(coursese.data[0][3])
+                            
                             if "YCQR" in coursese.data[0][3]:
                                 mult -= 1
                                 res.remove(req)
@@ -252,6 +254,8 @@ def inmajor(reqs, course):
                     else:
                         return res
             else:
+                
+        
                 # it is an or statement and each needs to be checked
                 if len(req) == 1:
                     if course == check:
@@ -262,8 +266,8 @@ def inmajor(reqs, course):
                         if course == r:
                             reqs.remove(req)
                             res = reqs
-                            break
-                    return res
+                            return res
+                    
     return res
         
             
@@ -308,18 +312,22 @@ def major():
 
         req_to_go = req_courses
         elc_to_go = ele_courses
-
         # run search with 
         for course in user_history:
             precount = courses_2_go(req_to_go, elc_to_go)
             req_to_go = inmajor(req_to_go, course)
             postcount = courses_2_go(req_to_go, elc_to_go)
             if precount == postcount:
+                precountelec = courses_2_go(req_to_go, elc_to_go)
                 elc_to_go = inmajor(elc_to_go, course)
+                postcountelec = courses_2_go(req_to_go, elc_to_go)
+                if precountelec != postcountelec:
+                    print("Elec found: " + str(course))
+            else:
+                print("Course found: " + str(course))
         
 
-        print(req_to_go)
-        print(elc_to_go)
+        
         amount_still_to_take = courses_2_go(req_to_go, elc_to_go)
 
         # see if it is in the three lowest to take
