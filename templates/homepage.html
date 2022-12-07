@@ -22,22 +22,24 @@
       <h1>Courses Search</h1>
 
       <div class="row">
-         <div class="p-3 col-10">
-            <form action="" method="get">
+         <div class="p-3 col-8">
+            <form action="" method="get" id="searchCourses">
                Subject:
                <input type="text" name="subj" , value="{{subj}}">
                Course Number:
                <input type="text" name="crn" , value="{{crn}}">
                Title:
                <input type="text" name="title" , value="{{title}}">
-      
-               <button class="btn btn-outline-secondary" type="submit">Search Courses</button>
-
             </form>
          </div>
 
-         <div class="p-3 col-2">
-            <a href="/major" class="btn btn-outline-info" tabindex="-1" role="button" aria-disabled="true">Major Match!</a>
+         <div class="col-4 row text-center">
+            <div class="p-2">
+               <button class="btn btn-outline-secondary" form="searchCourses" type="submit">Search Courses</button>
+            </div>
+            <div class="p-2">
+               <a href="/major" class="btn btn-outline-info" tabindex="-1" role="button" aria-disabled="true">Major Match!</a>
+            </div>
          </div>
       </div>
 
