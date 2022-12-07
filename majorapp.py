@@ -298,6 +298,7 @@ def major():
 
         print(name)
         print("----------------------------------")
+        
 
         req_client = RequisiteSearch(requirements)
         req_client.search()
@@ -309,6 +310,7 @@ def major():
 
         count = 0
         amount_to_take = courses_2_go(req_courses, ele_courses)
+        print("Amount to take: " + str(amount_to_take))
 
         req_to_go = req_courses
         elc_to_go = ele_courses
@@ -325,10 +327,14 @@ def major():
                     print("Elec found: " + str(course))
             else:
                 print("Course found: " + str(course))
+
+
         
 
         
         amount_still_to_take = courses_2_go(req_to_go, elc_to_go)
+        print("Amount still to take: " + str(amount_still_to_take))
+        print("----------------------------------")
 
         # see if it is in the three lowest to take
         if len(best) < 3:

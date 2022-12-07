@@ -3,16 +3,23 @@
 import warnings
 import requests
 import pandas as pd
+from sqlite3 import connect
+import sqlite3
 from database import CourseInsert
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
+# connect to database and clear the Courses table
+conn = sqlite3.connect('MajorMonkey.db')
+c = conn.cursor()
+c.execute("DELETE FROM Courses;")
+conn.commit()
+conn.close()
 
 # All the terms to be logged in the database
-# YEARS = ['201901', '201902', '201903', '202001', '202002', "202003",
-#             "202101", "202102", "202103", "202201", "202202", "202203"]
+YEARS = ["202102", "202103", "202201", "202202", "202203"]
 
 # Temporary for small scale testing
-YEARS = ['202203']
+# YEARS = ['202203']
 
 COURSE_URL = "https://gw.its.yale.edu/soa-gateway/courses/webservice/v3/index"
 SUBJ_URL = "https://gw.its.yale.edu/soa-gateway/course/webservice/v2/subjects"
