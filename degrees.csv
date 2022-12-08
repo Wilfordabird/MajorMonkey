@@ -7,4 +7,8 @@ PORT BA,PORT Req,PORT Elec
 EP&E BA,EP&E Req,EP&E Elec
 PHYS BS, PHYS Req, PHYS BS
 PHYS BSIntensive, PHYS Req, PHYS BSIntensive
-PORT BA, PORT BA
+BENG BS, BENG BS
+Classics BA, Classics BA
+Classics INT, Classics INT, Classics BA
+NEURO BA, NEURO BA, NEURO req
+NEURO BS, NEURO BS, NEURO req
