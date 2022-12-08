@@ -1,4 +1,4 @@
-# MajorMonkey
+# [MajorMonkey](https://github.com/Wilfordabird/MajorMonkey)
 
 ## Group Members:
 Gabriel Dos Santos, EJ Wilford, Alex Romero-Ruffo, and John Sedrak
@@ -23,3 +23,5 @@ For the major requirements, we had to manually generate the data from the Yale m
 
 ## Technical Challenges:
 We faced challenges creating the algorithm to determine whether a taken course fulfilled a major requirement. This was due to issues like double counting a course into multiple categories or improper parsing through nested lists of course requirement data. Through printing out course matches and running edge cases we were able to resolve this issue and acquire the proper number of remaining major courses. In the future we plan to address issues with course numbers that aren't pure integers like "HIST 101J" so that the algorithm can properly count and compare them.
+
+[Github Link](https://github.com/Wilfordabird/MajorMonkey)
