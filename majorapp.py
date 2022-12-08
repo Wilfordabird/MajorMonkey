@@ -1,9 +1,6 @@
 """Manages html pages"""
-import ast
-import urllib.parse as url
-from html import escape
-from datetime import datetime
-from flask import Flask, request, make_response, redirect, url_for
+
+from flask import Flask, request, make_response
 from flask import render_template
 from database import (
     CourseSearch, QueryArgs, UserSearch, UserUpdate, DegreeSearch, RequisiteSearch,
@@ -285,8 +282,6 @@ def major():
     client = DegreeSearch()
     client.search()
 
-
-    
     best = []
 
     # Loop through all possible degrees
@@ -299,7 +294,6 @@ def major():
         print(name)
         print("----------------------------------")
         
-
         req_client = RequisiteSearch(requirements)
         req_client.search()
         ele_client = RequisiteSearch(electives)
@@ -316,21 +310,23 @@ def major():
         elc_to_go = ele_courses
         # run search with 
         for course in user_history:
-            precount = courses_2_go(req_to_go, elc_to_go)
-            req_to_go = inmajor(req_to_go, course)
-            postcount = courses_2_go(req_to_go, elc_to_go)
-            if precount == postcount:
-                precountelec = courses_2_go(req_to_go, elc_to_go)
-                elc_to_go = inmajor(elc_to_go, course)
-                postcountelec = courses_2_go(req_to_go, elc_to_go)
-                if precountelec != postcountelec:
-                    print("Elec found: " + str(course))
-            else:
-                print("Course found: " + str(course))
-
-
-        
-
+            try:
+                precount = courses_2_go(req_to_go, elc_to_go)
+                req_to_go = inmajor(req_to_go, course)
+                postcount = courses_2_go(req_to_go, elc_to_go)
+                if precount == postcount:
+                    precountelec = courses_2_go(req_to_go, elc_to_go)
+                    elc_to_go = inmajor(elc_to_go, course)
+                    postcountelec = courses_2_go(req_to_go, elc_to_go)
+                    if precountelec != postcountelec:
+                        print("Elec found: " + str(course))
+                else:
+                    print("Course found: " + str(course))
+            except ValueError:
+                print("Value error")
+                print(course)
+                print("------------------")
+                continue
         
         amount_still_to_take = courses_2_go(req_to_go, elc_to_go)
         print("Amount still to take: " + str(amount_still_to_take))

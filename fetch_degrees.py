@@ -15,7 +15,6 @@ def main():
         requisitename = requirement[0]
         raw_requisite = requirement[1]
 
-        # TODO: Parse the requisite string into a list of lists!!!
         #FORMAT:
             # [name, [list of requisites]]
             #course = [dept, num]
@@ -26,8 +25,8 @@ def main():
             # [course, [course or course], course]
             # when there are multiple options to fufill the requisite with a cond
             # [course, [course or course], [course, cond, 4]]
-        # Must processes raw_requisite into a structured list format
-        #split at a comma or ;
+            # Must processes raw_requisite into a structured list format
+            # split at a comma or ;
         clean_requisite = re.split(';|,', raw_requisite)
         #get rid of the last entry if it is empty
         if clean_requisite[-1] == '' or clean_requisite[-1] == ' ':
